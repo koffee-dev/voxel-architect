@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voxel Architect — prompt-to-voxel structures</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>🧱 Voxel Architect <span class="phase">Phase 1</span></h1>
+    <p class="tag">Type a prompt, get voxel structures. Save the good ones, then compose them into bigger worlds.</p>
+  </header>
+
+  <main>
+    <!-- LEFT: prompt + parameters -->
+    <aside id="controls" class="panel">
+      <h2>Prompt</h2>
+      <textarea id="prompt" rows="3" placeholder="e.g. cozy cottage with chimney"></textarea>
+      <button id="generate" class="primary">⚡ Generate</button>
+      <p class="hint">Tip: try <em>tower</em>, <em>castle</em>, <em>cottage</em>, <em>shop</em>, <em>temple</em>, <em>mansion</em>, <em>bridge</em>, <em>apartment</em>.</p>
+
+      <h2>Parameters</h2>
+      <label class="ctl">
+        <span>Width <b id="v-width">9</b></span>
+        <input id="in-width" type="range" min="5" max="15" value="9" />
+      </label>
+      <label class="ctl">
+        <span>Depth <b id="v-depth">7</b></span>
+        <input id="in-depth" type="range" min="5" max="15" value="7" />
+      </label>
+      <label class="ctl">
+        <span>Stories <b id="v-stories">2</b></span>
+        <input id="in-stories" type="range" min="1" max="4" value="2" />
+      </label>
+      <label class="ctl">
+        <span>Roof style</span>
+        <select id="in-roof">
+          <option value="gable">Gable</option>
+          <option value="hip" selected>Hip</option>
+          <option value="flat">Flat</option>
+        </select>
+      </label>
+      <label class="ctl">
+        <span>Window density <b id="v-windows">45%</b></span>
+        <input id="in-windows" type="range" min="0" max="100" value="45" />
+      </label>
+      <div class="checks">
+        <label><input id="in-chimney" type="checkbox" /> Chimney</label>
+        <label><input id="in-symmetry" type="checkbox" checked /> Symmetry</label>
+        <label><input id="in-cren" type="checkbox" /> Crenellation</label>
+        <label><input id="in-pillars" type="checkbox" /> Pillars</label>
+      </div>
+
+      <div id="status" class="status"></div>
+    </aside>
+
+    <!-- CENTER: viewport + candidates -->
+    <section id="stage">
+      <div id="viewport"></div>
+      <div id="actions">
+        <button id="save" class="primary" disabled>💾 Save to library</button>
+        <span id="sel-label" class="sel-label"></span>
+      </div>
+      <div id="candidates" class="cand-strip"></div>
+    </section>
+
+    <!-- RIGHT: library -->
+    <aside id="lib-panel" class="panel">
+      <h2>Structure library</h2>
+      <p class="hint">Saved structures live in your browser. Click one to load it back.</p>
+      <div id="library" class="lib-list"></div>
+    </aside>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
