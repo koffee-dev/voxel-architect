@@ -34,6 +34,7 @@ let voxelGroup = null;
 let groundMesh = null;
 const materials = {};
 const boxGeom = new THREE.BoxGeometry(1, 1, 1);
+const groundMat = new THREE.MeshLambertMaterial({ color: 0x1e222c });
 const dummy = new THREE.Object3D();
 
 /* ------------------------------------------------------------------ */
@@ -141,12 +142,9 @@ function buildVoxelGroup(result) {
   }
   group.traverse((o) => { if (o.isInstancedMesh) o.instanceMatrix.needsUpdate = true; });
 
-  // ground disc
+  // ground disc (shared material; geometry rebuilt per size)
   const r = Math.max(W, D) * 1.4;
-  groundMesh = new THREE.Mesh(
-    new THREE.CircleGeometry(r, 48),
-    new THREE.MeshLambertMaterial({ color: 0x1e222c })
-  );
+  groundMesh = new THREE.Mesh(new THREE.CircleGeometry(r, 48), groundMat);
   groundMesh.rotation.x = -Math.PI / 2;
   groundMesh.receiveShadow = true;
   group.add(groundMesh);
